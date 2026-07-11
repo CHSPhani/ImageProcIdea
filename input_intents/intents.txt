@@ -1,5 +1,0 @@
-I1: Central areas of Ipswich attract more tourists and activities, so I expect the central region to have higher travel-option coverage than the outer areas (outer areas are still covered, just less).
-I2: Most outer areas should be less covered than the center, but the right-upper and bottom outer parts should be more covered than other outer parts because of universities and tourist attractions in those zones.
-I3:In this bar chart, I expect the bars on the right side to represent higher values than the bars on the left side, because the categories are ordered from low to high.
-I4:In this line plot, I expect an increasing trend from left to right, because the metric should grow over time.
-I5:In this scatter plot, I expect the upper half to be denser than the lower half, because higher values are more frequent in the dataset.

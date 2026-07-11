@@ -78,19 +78,6 @@ class ImageSegmentColorizer:
         
         n_regions = len(np.unique(self.segments))
         print(f"Created {n_regions} regions")
-        # Export SLIC segmentation to VisualModel JSON
-        try:
-            from .export_slic_to_visualmodel import export_slic_to_visualmodel
-        except ImportError:
-            from export_slic_to_visualmodel import export_slic_to_visualmodel
-        import os
-        output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'JSONs')
-        os.makedirs(output_dir, exist_ok=True)
-        # Use the original image filename (without extension) for the JSON filename
-        image_stem = self.image_path.stem
-        output_path = os.path.join(output_dir, f'{image_stem}.json')
-        export_slic_to_visualmodel(self.preprocessed_image, self.segments, output_path)
-        print(f"VisualModel JSON exported to: {output_path}")
         return self.segments
     
     def segment_watershed(self, markers=100):
@@ -676,9 +663,14 @@ def comprehensive_visualization(image_path):
 
 def main():
     """Main execution function"""
-    
+    import sys
+
+    # Usage: python segment_and_color.py [path/to/image]
+    default_image = str(Path(__file__).resolve().parent.parent / 'input_images' / 'brickwall.png')
+    image_path = sys.argv[1] if len(sys.argv) > 1 else default_image
+
     # Generate comprehensive visualization
-    comprehensive_visualization('../input_images/Original_Dest.png')
+    comprehensive_visualization(image_path)
 
 
 if __name__ == '__main__':

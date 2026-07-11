@@ -1,11 +1,5 @@
 # Image Segmentation as Graph Coloring Problem
 
-> **Note:** this is the original pitch the project started from. It's kept here as a historical
-> record of the idea's origin. The segmentation → Region Adjacency Graph → graph-coloring pipeline
-> described below is still implemented (`Code/segment_and_color.py`), but the project's current
-> direction — verifying an image against natural-language claims about what it shows — is a later
-> evolution of this idea. See the top-level [README](../README.md) for where the project is now.
-
 ## Core Concept
 
 This project treats image segmentation as a graph coloring problem, bridging two classical computer science domains:
