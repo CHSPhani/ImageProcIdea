@@ -1,0 +1,198 @@
+{
+  "schema": "svcs.verification_report.v1",
+  "visual_model": "C:\\Phani-Work\\ImageProcIdea\\JSONs\\Original_Dest.json",
+  "derived_predicates": "C:\\Phani-Work\\ImageProcIdea\\Predicate_Result\\derived_predicates.json",
+  "compiled_intents": "C:\\Phani-Work\\ImageProcIdea\\input_intents\\compiled_intents.json",
+  "settings": {
+    "weighted_by_area": true,
+    "tau": 0.6
+  },
+  "items": [
+    {
+      "intent_id": "I1",
+      "question": "Are central regions more covered than outer regions (with outer still non-zero covered)?",
+      "raw_intent": "Central areas of Ipswich attract more tourists and activities, so I expect the central region to have higher travel-option coverage than the outer areas (outer areas are still covered, just less).",
+      "alignment": 0.5796188564872011,
+      "violations": [
+        "c1_center_vs_outer",
+        "c1b_outer_nonzero"
+      ],
+      "constraint_results": [
+        {
+          "id": "c1_center_vs_outer",
+          "type": "compare_means",
+          "metric": "mean_intensity",
+          "lhs_set": "CENTER",
+          "rhs_set": "OUTER",
+          "lhs_mean": 0.6714350987270546,
+          "rhs_mean": 0.8085710109268506,
+          "op": "<",
+          "satisfied": true,
+          "score": 0.5848014029359025,
+          "margin": 0.13713591219979593,
+          "lhs_count": 7,
+          "rhs_count": 92
+        },
+        {
+          "id": "c1b_outer_nonzero",
+          "type": "mean_threshold",
+          "metric": "mean_intensity",
+          "set": "OUTER",
+          "mean": 0.8085710109268506,
+          "op": "<=",
+          "threshold": 0.95,
+          "satisfied": true,
+          "score": 0.5744363100384997,
+          "margin": 0.14142898907314938,
+          "count": 92
+        }
+      ]
+    },
+    {
+      "intent_id": "I2",
+      "question": "Are most outer regions less covered than the center, but upper-right and bottom-outer regions more covered than other outer regions?",
+      "raw_intent": "Most outer areas should be less covered than the center, but the right-upper and bottom outer parts should be more covered than other outer parts because of universities and tourist attractions in those zones.",
+      "alignment": 0.5144704543897763,
+      "violations": [
+        "c2_center_vs_outer",
+        "c2a_upper_right_outer_vs_other_outer",
+        "c2b_bottom_outer_vs_other_outer"
+      ],
+      "constraint_results": [
+        {
+          "id": "c2_center_vs_outer",
+          "type": "compare_means",
+          "metric": "mean_intensity",
+          "lhs_set": "CENTER",
+          "rhs_set": "OUTER",
+          "lhs_mean": 0.6714350987270546,
+          "rhs_mean": 0.8085710109268506,
+          "op": "<",
+          "satisfied": true,
+          "score": 0.5848014029359025,
+          "margin": 0.13713591219979593,
+          "lhs_count": 7,
+          "rhs_count": 92
+        },
+        {
+          "id": "c2a_upper_right_outer_vs_other_outer",
+          "type": "compare_means",
+          "metric": "mean_intensity",
+          "lhs_set": "UPPER_RIGHT",
+          "rhs_set": {
+            "set_diff": [
+              "OUTER",
+              "UPPER_RIGHT"
+            ]
+          },
+          "lhs_mean": 0.8996663411178183,
+          "rhs_mean": 0.8019534682764676,
+          "op": "<",
+          "satisfied": false,
+          "score": 0.44569493801449533,
+          "margin": -0.09771287284135066,
+          "lhs_count": 8,
+          "rhs_count": 84
+        },
+        {
+          "id": "c2b_bottom_outer_vs_other_outer",
+          "type": "compare_means",
+          "metric": "mean_intensity",
+          "lhs_set": "BOTTOM_OUTER",
+          "rhs_set": {
+            "set_diff": [
+              "OUTER",
+              "BOTTOM_OUTER"
+            ]
+          },
+          "lhs_mean": 0.7935161681995555,
+          "rhs_mean": 0.8145561908051894,
+          "op": "<",
+          "satisfied": true,
+          "score": 0.5129150222189311,
+          "margin": 0.021040022605633868,
+          "lhs_count": 28,
+          "rhs_count": 64
+        }
+      ]
+    },
+    {
+      "intent_id": "I3",
+      "question": "Are the right-side regions (proxy for bars on the right) more covered than left-side regions?",
+      "raw_intent": "In this bar chart, I expect the bars on the right side to represent higher values than the bars on the left side, because the categories are ordered from low to high.",
+      "alignment": 0.4824794573303261,
+      "violations": [
+        "c3_right_vs_left"
+      ],
+      "constraint_results": [
+        {
+          "id": "c3_right_vs_left",
+          "type": "compare_means",
+          "metric": "mean_intensity",
+          "lhs_set": "RIGHT",
+          "rhs_set": "LEFT",
+          "lhs_mean": 0.8358030286795959,
+          "rhs_mean": 0.8065155834247488,
+          "op": "<",
+          "satisfied": false,
+          "score": 0.4824794573303261,
+          "margin": -0.029287445254847055,
+          "lhs_count": 30,
+          "rhs_count": 25
+        }
+      ]
+    },
+    {
+      "intent_id": "I4",
+      "question": "Is there a left-to-right increase in activity (proxy: right side more covered than left side)?",
+      "raw_intent": "In this line plot, I expect an increasing trend from left to right, because the metric should grow over time.",
+      "alignment": 0.4824794573303261,
+      "violations": [
+        "c4_right_vs_left_proxy_trend"
+      ],
+      "constraint_results": [
+        {
+          "id": "c4_right_vs_left_proxy_trend",
+          "type": "compare_means",
+          "metric": "mean_intensity",
+          "lhs_set": "RIGHT",
+          "rhs_set": "LEFT",
+          "lhs_mean": 0.8358030286795959,
+          "rhs_mean": 0.8065155834247488,
+          "op": "<",
+          "satisfied": false,
+          "score": 0.4824794573303261,
+          "margin": -0.029287445254847055,
+          "lhs_count": 30,
+          "rhs_count": 25
+        }
+      ]
+    },
+    {
+      "intent_id": "I5",
+      "question": "Is the upper half denser/more covered than the lower half?",
+      "raw_intent": "In this scatter plot, I expect the upper half to be denser than the lower half, because higher values are more frequent in the dataset.",
+      "alignment": 0.4669600887520373,
+      "violations": [
+        "c5_top_vs_bottom"
+      ],
+      "constraint_results": [
+        {
+          "id": "c5_top_vs_bottom",
+          "type": "compare_means",
+          "metric": "mean_intensity",
+          "lhs_set": "TOP",
+          "rhs_set": "BOTTOM",
+          "lhs_mean": 0.84966165986503,
+          "rhs_mean": 0.7935161681995555,
+          "op": "<",
+          "satisfied": false,
+          "score": 0.4669600887520373,
+          "margin": -0.056145491665474445,
+          "lhs_count": 26,
+          "rhs_count": 28
+        }
+      ]
+    }
+  ]
+}

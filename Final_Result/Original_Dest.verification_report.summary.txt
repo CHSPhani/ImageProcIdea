@@ -1,0 +1,76 @@
+SVCS Verification Summary (User-friendly)
+------------------------------------------------------------
+Visual model: C:\Phani-Work\ImageProcIdea\JSONs\Original_Dest.json
+Derived predicates: C:\Phani-Work\ImageProcIdea\derived_predicates\Original_Dest.derived_predicates.json
+Compiled intents: C:\Phani-Work\ImageProcIdea\input_intents\compiled_intents.json
+Settings: weighted_by_area=True  tau=0.600
+
+Legend:
+  PASS/FAIL = logical satisfaction of constraints
+  OK/WEAK   = whether score >= tau (a confidence/strength flag)
+  mean_intensity: lower means darker (more covered) in your current setup
+------------------------------------------------------------
+
+Intent I1: PASS (alignment=0.580)
+Q: Are central regions more covered than outer regions (with outer still non-zero covered)?
+User intent: Central areas of Ipswich attract more tourists and activities, so I expect the central region to have higher travel-option coverage than the outer areas (outer areas are still covered, just less).
+Flags (score < 0.600): c1_center_vs_outer, c1b_outer_nonzero
+Constraints:
+- c1_center_vs_outer: mean(CENTER) < mean(OUTER)
+  • PASS (WEAK, score=0.585, tau=0.600)
+  • mean(CENTER)=0.671  mean(OUTER)=0.809  margin=0.137  (Lower mean_intensity = darker = more covered (so LHS should be LOWER than RHS).)
+- c1b_outer_nonzero: mean(OUTER) <= 0.95
+  • PASS (WEAK, score=0.574, tau=0.600)
+  • mean(OUTER)=0.809  threshold=0.950  margin=0.141
+
+------------------------------------------------------------
+
+Intent I2: FAIL (alignment=0.514)
+Q: Are most outer regions less covered than the center, but upper-right and bottom-outer regions more covered than other outer regions?
+User intent: Most outer areas should be less covered than the center, but the right-upper and bottom outer parts should be more covered than other outer parts because of universities and tourist attractions in those zones.
+Flags (score < 0.600): c2_center_vs_outer, c2a_upper_right_outer_vs_other_outer, c2b_bottom_outer_vs_other_outer
+Constraints:
+- c2_center_vs_outer: mean(CENTER) < mean(OUTER)
+  • PASS (WEAK, score=0.585, tau=0.600)
+  • mean(CENTER)=0.671  mean(OUTER)=0.809  margin=0.137  (Lower mean_intensity = darker = more covered (so LHS should be LOWER than RHS).)
+- c2a_upper_right_outer_vs_other_outer: mean(UPPER_RIGHT) < mean({'set_diff': ['OUTER', 'UPPER_RIGHT']})
+  • FAIL (WEAK, score=0.446, tau=0.600)
+  • mean(UPPER_RIGHT)=0.900  mean({'set_diff': ['OUTER', 'UPPER_RIGHT']})=0.802  margin=-0.098  (Lower mean_intensity = darker = more covered (so LHS should be LOWER than RHS).)
+- c2b_bottom_outer_vs_other_outer: mean(BOTTOM_OUTER) < mean({'set_diff': ['OUTER', 'BOTTOM_OUTER']})
+  • PASS (WEAK, score=0.513, tau=0.600)
+  • mean(BOTTOM_OUTER)=0.794  mean({'set_diff': ['OUTER', 'BOTTOM_OUTER']})=0.815  margin=0.021  (Lower mean_intensity = darker = more covered (so LHS should be LOWER than RHS).)
+
+------------------------------------------------------------
+
+Intent I3: FAIL (alignment=0.482)
+Q: Are the right-side regions (proxy for bars on the right) more covered than left-side regions?
+User intent: In this bar chart, I expect the bars on the right side to represent higher values than the bars on the left side, because the categories are ordered from low to high.
+Flags (score < 0.600): c3_right_vs_left
+Constraints:
+- c3_right_vs_left: mean(RIGHT) < mean(LEFT)
+  • FAIL (WEAK, score=0.482, tau=0.600)
+  • mean(RIGHT)=0.836  mean(LEFT)=0.807  margin=-0.029  (Lower mean_intensity = darker = more covered (so LHS should be LOWER than RHS).)
+
+------------------------------------------------------------
+
+Intent I4: FAIL (alignment=0.482)
+Q: Is there a left-to-right increase in activity (proxy: right side more covered than left side)?
+User intent: In this line plot, I expect an increasing trend from left to right, because the metric should grow over time.
+Flags (score < 0.600): c4_right_vs_left_proxy_trend
+Constraints:
+- c4_right_vs_left_proxy_trend: mean(RIGHT) < mean(LEFT)
+  • FAIL (WEAK, score=0.482, tau=0.600)
+  • mean(RIGHT)=0.836  mean(LEFT)=0.807  margin=-0.029  (Lower mean_intensity = darker = more covered (so LHS should be LOWER than RHS).)
+
+------------------------------------------------------------
+
+Intent I5: FAIL (alignment=0.467)
+Q: Is the upper half denser/more covered than the lower half?
+User intent: In this scatter plot, I expect the upper half to be denser than the lower half, because higher values are more frequent in the dataset.
+Flags (score < 0.600): c5_top_vs_bottom
+Constraints:
+- c5_top_vs_bottom: mean(TOP) < mean(BOTTOM)
+  • FAIL (WEAK, score=0.467, tau=0.600)
+  • mean(TOP)=0.850  mean(BOTTOM)=0.794  margin=-0.056  (Lower mean_intensity = darker = more covered (so LHS should be LOWER than RHS).)
+
+------------------------------------------------------------
